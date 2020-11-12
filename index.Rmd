@@ -23,7 +23,7 @@ opts_chunk$set(
   warning = FALSE,
   message = FALSE,
   eval=TRUE,
-  echo = TRUE,
+  echo = FALSE,
   cache = FALSE,
   fig.width = 7, 
   fig.align = 'center',
@@ -41,21 +41,14 @@ opts_chunk$set(
   font-size: 10px;
 }
 ```
-
-
-
 ```{r}
 source("process_COVID_data.R")
 ```
 
 <br>
 
-## Second step
-
-Then I will add some code to create the **plotly** figures
-
-Note: You need to name each code chunk, like this one: `plot1`
-
+## lab 12 
+You need to name each code chunk, like this one: `plot1`
 ```{r plot1, class.source="code-r-small"}
 
 p1_scatter <- cv_states_today %>% 
@@ -86,7 +79,7 @@ p2_scatter <- cv_states_today_scatter %>%
 
 <br>
 
-## Third step {.tabset}
+## showcase {.tabset}
 
 Create tabs to display each figure
 
@@ -104,9 +97,131 @@ p2_scatter
 
 ## {-}
 
+
+
+
+
+
+# For Assignment 5
+```{r,message=FALSE, echo=FALSE, warning=FALSE, results='hide',fig.show='hide'}
+# data manipulation
+library(data.table)
+library(tidyverse) 
+library(psych)
+library(leaflet)
+library(ggplot2)
+library(kableExtra)
+library(plotly)
+#look at the data
+covid_race = data.table::fread("/Users/haoyueshan/Desktop/pm566/final-redo/data/Race-Data-updated.csv")
+#choosing the latest data 
+covid_race = covid_race[1:56,1:28]
+
+#change characteristic varibles into numeric varibles
+covid_race = covid_race %>% 
+  mutate(Cases_Total = as.numeric(Cases_Total), Cases_White = as.numeric(Cases_White), Cases_Ethnicity_Unknown = as.numeric(Cases_Ethnicity_Unknown))
+sub = covid_race[,4:28]
+
+#sum up the total values without NA's for every race and make an overall barplot
+temp = apply(sub,2,sum, na.rm = TRUE)
+temp = as.data.frame(temp)
+names=rownames(temp)
+
+#make subgroup of cases and deaths(only look at the known cases and deaths)
+cases_name = names[0:8]
+cases_number= temp[0:8,]
+cases = data.frame(cases_name,cases_number)
+deaths_name = names[14:21]
+deaths_number = temp[14:21,]
+deaths = data.frame(deaths_name,deaths_number)
+kable(cases,'html', caption = "The total cases number of known races")
+kable(deaths,'html', caption = "The total deaths number of known races")
+#count the percentage for each group 
+pct_case = cases$cases_number/sum(cases$cases_number)
+pct_cases = data.frame(cases_name,pct_case)
+kable(pct_cases,'html', caption = "The percentage of cases for the known races")
+pct_death = deaths$deaths_number/sum(deaths$deaths_number)
+pct_deaths = data.frame(deaths_name,pct_death)
+kable(pct_deaths,'html', caption = "The percentage of deaths for the known races")
+
+#making a pie chart for race compnent using plotly 
+
+cases = plot_ly(pct_cases, labels = ~cases_name, values = ~pct_case, type = 'pie')
+cases = cases %>% layout(title = 'The percentage of reported COVID cases for each known races',
+         xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+         yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
+
+deaths = plot_ly(pct_deaths, labels = ~deaths_name, values = ~pct_death, type = 'pie')
+deaths = deaths %>% layout(title = 'The percentage of reported COVID deaths for each known races',
+         xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+         yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
+
+#bar plot for each table using plotly
+bar_cases = plot_ly(
+  x = cases_name,
+  y = pct_case,
+  name = "Reported COVID cases",
+  type = "bar"
+)
+
+bar_deaths = plot_ly(
+  x = deaths_name,
+  y = pct_death,
+  name = "Reported COVID deaths",
+  type = "bar"
+)
+
+
+##the fatality rate and plot
+races = c("White","Black","LatinX","Asian","AIAN","NHPI","Cases_Multiracial","Cases_Other")
+total_number = data.frame(races,cases_number,deaths_number)
+total_number = total_number %>%
+  mutate(fatality_rate = deaths_number/cases_number)
+kable(total_number,'html', caption = "The case number, death number and fatality rate for each race")
+
+fig2 <- plot_ly(total_number, x = ~fatality_rate, y = ~races, type = 'bar', orientation = 'h', marker = list(color = 'rgba(246, 78, 139, 0.6)'))
+```
+
+## Graphs {.tabset}
+
+### Pie chart of cases number for known races 
+```{r cases}
+cases
+```
+From the pie chart we can see that the white race contributed more than a half(51.1%) to the total number of reported COVID cases.Other races made up the other half of this pie chart. We can see that besides white race, the black race contributed most(20.1%) to the pie chart; the third large component is latino race, which contribute 15.8% to the total cases number; the forth large component is the asian race, which contributed less than 10%(7.92%) to the total cases number. Besides those races mentioned above, the AIAN, NHPI, multiracial and other races added up contributed less than 10% to the total cases number. 
+
+### Pie chart of deaths number for known races
+```{r deaths}
+deaths
+```
+
+From the pie chart above, we can tell that race white contributed more than a half to the death counts(52.7%), the race black(19.9%) and race latino(19%) contributed similar porportion to the total death count. As for other races, they added up contributed less than 10% to the total death number. 
+
+
+### Bar chart of cases number for known races
+```{r bar_cases}
+bar_cases
+```
+From the bar plot above, we can see that the white race have the highest cases number among all of the known races, which is more than twice as much as the second highest race latino.  Besides white, latino and black, each of the other races contribute less than 10% to the total number.
+
+### Bar chart of death number for known races
+```{r bar_deaths}
+bar_deaths
+```
+From the bar chart above, we can see that the white race have the highest death number among all of the known races, and the proportion of race black is slightly higher than race latino. Besides race white, black and latino, each of the other races contributed less than 5% to the total death number.
+
+### Fatality rate for know races 
+```{r fig2}
+fig2
+```
+From the table and bar plot above, we can see that though race asian has the fifth largest number of cases count and forth largest number of death count, it has the highest mortality rate among all of the known races.
+
+## {-}
+
 <br>
 
-Done!
+
 
 <br>
 <br>
+
