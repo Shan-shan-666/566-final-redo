@@ -5,6 +5,10 @@ navbar:
   left:
     - text: "Home"
       href: index.html
+    - text: "Lab 12"
+      href: Lab12.html
+    - text: "Assignment 5"
+      href: assignment5.html
 output:
   html_document:
     theme: cosmo
