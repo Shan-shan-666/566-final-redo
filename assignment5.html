@@ -9,11 +9,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=EDGE" />
 
 
-<meta name="author" content="Shan" />
+<meta name="author" content="Haoyue Shan" />
 
-<meta name="date" content="2020-11-15" />
 
-<title>Untitled</title>
+<title>Assignment 5</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -21,9 +20,19 @@
 <script src="site_libs/bootstrap-3.3.5/js/bootstrap.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/html5shiv.min.js"></script>
 <script src="site_libs/bootstrap-3.3.5/shim/respond.min.js"></script>
+<script src="site_libs/jqueryui-1.11.4/jquery-ui.min.js"></script>
+<link href="site_libs/tocify-1.9.1/jquery.tocify.css" rel="stylesheet" />
+<script src="site_libs/tocify-1.9.1/jquery.tocify.js"></script>
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<script src="site_libs/plotly-binding-4.9.2.1/plotly.js"></script>
+<script src="site_libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="site_libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
+<link href="site_libs/plotly-htmlwidgets-css-1.52.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="site_libs/plotly-main-1.52.2/plotly-latest.min.js"></script>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -250,6 +259,69 @@ $(document).ready(function () {
 
 
 
+<style type="text/css">
+
+#TOC {
+  margin: 25px 0px 20px 0px;
+}
+@media (max-width: 768px) {
+#TOC {
+  position: relative;
+  width: 100%;
+}
+}
+
+@media print {
+.toc-content {
+  /* see https://github.com/w3c/csswg-drafts/issues/4434 */
+  float: right;
+}
+}
+
+.toc-content {
+  padding-left: 30px;
+  padding-right: 40px;
+}
+
+div.main-container {
+  max-width: 1200px;
+}
+
+div.tocify {
+  width: 20%;
+  max-width: 260px;
+  max-height: 85%;
+}
+
+@media (min-width: 768px) and (max-width: 991px) {
+  div.tocify {
+    width: 25%;
+  }
+}
+
+@media (max-width: 767px) {
+  div.tocify {
+    width: 100%;
+    max-width: none;
+  }
+}
+
+.tocify ul, .tocify li {
+  line-height: 20px;
+}
+
+.tocify-subheader .tocify-item {
+  font-size: 0.90em;
+}
+
+.tocify .list-group-item {
+  border-radius: 0px;
+}
+
+
+</style>
+
+
 
 </head>
 
@@ -257,6 +329,16 @@ $(document).ready(function () {
 
 
 <div class="container-fluid main-container">
+
+
+<!-- setup 3col/9col grid for toc_float and main content  -->
+<div class="row-fluid">
+<div class="col-xs-12 col-sm-4 col-md-3">
+<div id="TOC" class="tocify">
+</div>
+</div>
+
+<div class="toc-content col-xs-12 col-sm-8 col-md-9">
 
 
 
@@ -294,34 +376,63 @@ $(document).ready(function () {
 
 
 
-<h1 class="title toc-ignore">Untitled</h1>
-<h4 class="author">Shan</h4>
-<h4 class="date">11/15/2020</h4>
+<h1 class="title toc-ignore">Assignment 5</h1>
+<h4 class="author">Haoyue Shan</h4>
 
 </div>
 
 
-<div id="r-markdown" class="section level2">
-<h2>R Markdown</h2>
-<p>This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <a href="http://rmarkdown.rstudio.com" class="uri">http://rmarkdown.rstudio.com</a>.</p>
-<p>When you click the <strong>Knit</strong> button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:</p>
-<pre><code>##      speed           dist       
-##  Min.   : 4.0   Min.   :  2.00  
-##  1st Qu.:12.0   1st Qu.: 26.00  
-##  Median :15.0   Median : 36.00  
-##  Mean   :15.4   Mean   : 42.98  
-##  3rd Qu.:19.0   3rd Qu.: 56.00  
-##  Max.   :25.0   Max.   :120.00</code></pre>
+<p><br></p>
+<style type="text/css">
+.code-r { /* Code block */
+  font-size: 15px;
+}
+
+.code-r-small { /* Code block */
+  font-size: 10px;
+}
+</style>
+<div id="pie-chart-graphs" class="section level2 tabset">
+<h2>Pie Chart Graphs</h2>
+<div id="case" class="section level3">
+<h3>Case</h3>
+<p><div id="htmlwidget-c854e067f978985f5f6f" style="width:700px;height:415.296px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-c854e067f978985f5f6f">{"x":{"visdat":{"f0a71562901":["function () ","plotlyVisDat"]},"cur_data":"f0a71562901","attrs":{"f0a71562901":{"labels":{},"values":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"pie"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"The percentage of reported COVID cases for each known races","xaxis":{"showgrid":false,"zeroline":false,"showticklabels":false},"yaxis":{"showgrid":false,"zeroline":false,"showticklabels":false},"hovermode":"closest","showlegend":true},"source":"A","config":{"showSendToCloud":false},"data":[{"labels":["Cases_White","Cases_Black","Cases_LatinX","Cases_Asian","Cases_AIAN","Cases_NHPI","Cases_Multiracial","Cases_Other"],"values":[0.511481678570678,0.158096755137445,0.201325335932115,0.0260730599140874,0.0129746334954811,0.00382622909728881,0.00705266844312835,0.0791696394097762],"type":"pie","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(255,255,255,1)"}},"frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script> From the pie chart we can see that the white race contributed more than a half(51.1%) to the total number of reported COVID cases.Other races made up the other half of this pie chart. We can see that besides white race, the black race contributed most(20.1%) to the pie chart; the third large component is latino race, which contribute 15.8% to the total cases number; the forth large component is the asian race, which contributed less than 10%(7.92%) to the total cases number. Besides those races mentioned above, the AIAN, NHPI, multiracial and other races added up contributed less than 10% to the total cases number.</p>
 </div>
-<div id="including-plots" class="section level2">
-<h2>Including Plots</h2>
-<p>You can also embed plots, for example:</p>
-<p><img src="assignment5_files/figure-html/pressure-1.png" width="700px" style="display: block; margin: auto;" /></p>
-<p>Note that the <code>echo = FALSE</code> parameter was added to the code chunk to prevent printing of the R code that generated the plot.</p>
+<div id="death" class="section level3">
+<h3>Death</h3>
+<p><div id="htmlwidget-edcca7584bf1cdf3808d" style="width:700px;height:415.296px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-edcca7584bf1cdf3808d">{"x":{"visdat":{"f0a4f9e3ac8":["function () ","plotlyVisDat"]},"cur_data":"f0a4f9e3ac8","attrs":{"f0a4f9e3ac8":{"labels":{},"values":{},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"pie"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"The percentage of reported COVID deaths for each known races","xaxis":{"showgrid":false,"zeroline":false,"showticklabels":false},"yaxis":{"showgrid":false,"zeroline":false,"showticklabels":false},"hovermode":"closest","showlegend":true},"source":"A","config":{"showSendToCloud":false},"data":[{"labels":["Deaths_White","Deaths_Black","Deaths_LatinX","Deaths_Asian","Deaths_AIAN","Deaths_NHPI","Deaths_Multiracial","Deaths_Other"],"values":[0.527475068137458,0.199174792030696,0.190180203011831,0.0361250794751748,0.00903015832788678,0.00147612632440099,0.0024765131406366,0.0340620595519156],"type":"pie","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(255,255,255,1)"}},"frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script> From the pie chart above, we can tell that race white contributed more than a half to the death counts(52.7%), the race black(19.9%) and race latino(19%) contributed similar porportion to the total death count. As for other races, they added up contributed less than 10% to the total death number.</p>
+</div>
+</div>
+<div id="bar-chart-of-cases-number-for-known-races" class="section level2 tabset">
+<h2>Bar chart of cases number for known races</h2>
+<div id="case-1" class="section level3">
+<h3>Case</h3>
+<p><div id="htmlwidget-b268fd67981a05348398" style="width:700px;height:415.296px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-b268fd67981a05348398">{"x":{"visdat":{"f0a1d25494e":["function () ","plotlyVisDat"]},"cur_data":"f0a1d25494e","attrs":{"f0a1d25494e":{"x":["Cases_White","Cases_Black","Cases_LatinX","Cases_Asian","Cases_AIAN","Cases_NHPI","Cases_Multiracial","Cases_Other"],"y":[0.511481678570678,0.158096755137445,0.201325335932115,0.0260730599140874,0.0129746334954811,0.00382622909728881,0.00705266844312835,0.0791696394097762],"name":"Reported COVID cases","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"xaxis":{"domain":[0,1],"automargin":true,"title":[],"type":"category","categoryorder":"array","categoryarray":["Cases_AIAN","Cases_Asian","Cases_Black","Cases_LatinX","Cases_Multiracial","Cases_NHPI","Cases_Other","Cases_White"]},"yaxis":{"domain":[0,1],"automargin":true,"title":[]},"hovermode":"closest","showlegend":false},"source":"A","config":{"showSendToCloud":false},"data":[{"x":["Cases_White","Cases_Black","Cases_LatinX","Cases_Asian","Cases_AIAN","Cases_NHPI","Cases_Multiracial","Cases_Other"],"y":[0.511481678570678,0.158096755137445,0.201325335932115,0.0260730599140874,0.0129746334954811,0.00382622909728881,0.00705266844312835,0.0791696394097762],"name":"Reported COVID cases","type":"bar","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script> From the bar plot above, we can see that the white race have the highest cases number among all of the known races, which is more than twice as much as the second highest race latino. Besides white, latino and black, each of the other races contribute less than 10% to the total number.</p>
+</div>
+<div id="death-1" class="section level3">
+<h3>Death</h3>
+<p><div id="htmlwidget-ab9f43802fc17edc72fb" style="width:700px;height:415.296px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-ab9f43802fc17edc72fb">{"x":{"visdat":{"f0a7aefaed4":["function () ","plotlyVisDat"]},"cur_data":"f0a7aefaed4","attrs":{"f0a7aefaed4":{"x":["Deaths_White","Deaths_Black","Deaths_LatinX","Deaths_Asian","Deaths_AIAN","Deaths_NHPI","Deaths_Multiracial","Deaths_Other"],"y":[0.527475068137458,0.199174792030696,0.190180203011831,0.0361250794751748,0.00903015832788678,0.00147612632440099,0.0024765131406366,0.0340620595519156],"name":"Reported COVID deaths","alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"xaxis":{"domain":[0,1],"automargin":true,"title":[],"type":"category","categoryorder":"array","categoryarray":["Deaths_AIAN","Deaths_Asian","Deaths_Black","Deaths_LatinX","Deaths_Multiracial","Deaths_NHPI","Deaths_Other","Deaths_White"]},"yaxis":{"domain":[0,1],"automargin":true,"title":[]},"hovermode":"closest","showlegend":false},"source":"A","config":{"showSendToCloud":false},"data":[{"x":["Deaths_White","Deaths_Black","Deaths_LatinX","Deaths_Asian","Deaths_AIAN","Deaths_NHPI","Deaths_Multiracial","Deaths_Other"],"y":[0.527475068137458,0.199174792030696,0.190180203011831,0.0361250794751748,0.00903015832788678,0.00147612632440099,0.0024765131406366,0.0340620595519156],"name":"Reported COVID deaths","type":"bar","marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(31,119,180,1)"}},"error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script> From the bar chart above, we can see that the white race have the highest death number among all of the known races, and the proportion of race black is slightly higher than race latino. Besides race white, black and latino, each of the other races contributed less than 5% to the total death number.</p>
+</div>
+<div id="fatality-rate-for-know-races" class="section level3 tabset">
+<h3>Fatality rate for know races</h3>
+<p><div id="htmlwidget-3d6697de679206ebf92a" style="width:700px;height:415.296px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-3d6697de679206ebf92a">{"x":{"visdat":{"f0adbf1f5a":["function () ","plotlyVisDat"]},"cur_data":"f0adbf1f5a","attrs":{"f0adbf1f5a":{"x":{},"y":{},"orientation":"h","marker":{"color":"rgba(246, 78, 139, 0.6)"},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"xaxis":{"domain":[0,1],"automargin":true,"title":"fatality_rate"},"yaxis":{"domain":[0,1],"automargin":true,"title":"races","type":"category","categoryorder":"array","categoryarray":["AIAN","Asian","Black","Cases_Multiracial","Cases_Other","LatinX","NHPI","White"]},"hovermode":"closest","showlegend":false},"source":"A","config":{"showSendToCloud":false},"data":[{"x":[0.0355802255569645,0.0434658580958156,0.0325914524965141,0.047802834634551,0.0240124850734799,0.0133103475925109,0.0121150165303637,0.0148439361910316],"y":["White","Black","LatinX","Asian","AIAN","NHPI","Cases_Multiracial","Cases_Other"],"orientation":"h","marker":{"color":"rgba(246, 78, 139, 0.6)","line":{"color":"rgba(31,119,180,1)"}},"type":"bar","error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script> From the table and bar plot above, we can see that though race asian has the fifth largest number of cases count and forth largest number of death count, it has the highest mortality rate among all of the known races.</p>
+</div>
+</div>
+<div id="section" class="section level2 unnumbered">
+<h2></h2>
+<p><br></p>
+<p><br> <br></p>
 </div>
 
 
 
+</div>
+</div>
 
 </div>
 
@@ -354,6 +465,32 @@ $(document).ready(function () {
 
 <!-- code folding -->
 
+<script>
+$(document).ready(function ()  {
+
+    // move toc-ignore selectors from section div to header
+    $('div.section.toc-ignore')
+        .removeClass('toc-ignore')
+        .children('h1,h2,h3,h4,h5').addClass('toc-ignore');
+
+    // establish options
+    var options = {
+      selectors: "h1,h2,h3",
+      theme: "bootstrap3",
+      context: '.toc-content',
+      hashGenerator: function (text) {
+        return text.replace(/[.\\/?&!#<>]/g, '').replace(/\s/g, '_');
+      },
+      ignoreSelector: ".toc-ignore",
+      scrollTo: 0
+    };
+    options.showAndHide = true;
+    options.smoothScroll = true;
+
+    // tocify
+    var toc = $("#TOC").tocify(options).data("toc-tocify");
+});
+</script>
 
 <!-- dynamically load mathjax for compatibility with self-contained -->
 <script>
