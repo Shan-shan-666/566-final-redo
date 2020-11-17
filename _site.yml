@@ -6,7 +6,7 @@ navbar:
     - text: "Home"
       href: index.html
     - text: "test"
-      href="test.jpeg" download
+      href: "test.jpeg" download
     - text: "Lab 12"
       href: Lab12.html
     - text: "Assignment 5"
