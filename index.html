@@ -26,6 +26,13 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
+<script src="site_libs/htmlwidgets-1.5.1/htmlwidgets.js"></script>
+<script src="site_libs/plotly-binding-4.9.2.1/plotly.js"></script>
+<script src="site_libs/typedarray-0.1/typedarray.min.js"></script>
+<link href="site_libs/crosstalk-1.1.0.1/css/crosstalk.css" rel="stylesheet" />
+<script src="site_libs/crosstalk-1.1.0.1/js/crosstalk.min.js"></script>
+<link href="site_libs/plotly-htmlwidgets-css-1.52.2/plotly-htmlwidgets.css" rel="stylesheet" />
+<script src="site_libs/plotly-main-1.52.2/plotly-latest.min.js"></script>
 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
@@ -385,13 +392,86 @@ div.tocify {
   font-size: 10px;
 }
 </style>
-<div id="clean" class="section level2">
-<h2>Clean!</h2>
-</div>
-<div id="section" class="section level2 unnumbered">
-<h2></h2>
 <p><br></p>
-<p><br> <br></p>
+<div id="final-project-presentation" class="section level1">
+<h1>Final Project presentation</h1>
+<p><br></p>
+<div id="overview" class="section level2">
+<h2>Overview</h2>
+<ul>
+<li>This is the PM566(Introduction to Health Data Science) final project. The analysis in this project is bases on the key question: Among population with known race category across the U.S, what races were being affected most by covid-19? It is obvious that the covid-19 is becoming a pandemic issue for the world, especially for they U.S. Also, the States is one of the most racially and ethnically diverse nations in the world. Therefore, the key question should have something worth dig in. Let’s take a look.</li>
+</ul>
+<p><br></p>
+</div>
+<div id="data-souces" class="section level2">
+<h2>Data Souces</h2>
+<ul>
+<li><p>2019 Races data: <a href="https://www.kff.org/other/state-indicator/distribution-by-raceethnicity/?dataView=1&amp;currentTimeframe=0&amp;selectedRows=%7B%22wrapups%22:%7B%22united-states%22:%7B%7D%7D%7D&amp;sortModel=%7B%22colId%22:%22Location%22,%22sort%22:%22asc%22%7D" class="uri">https://www.kff.org/other/state-indicator/distribution-by-raceethnicity/?dataView=1&amp;currentTimeframe=0&amp;selectedRows=%7B%22wrapups%22:%7B%22united-states%22:%7B%7D%7D%7D&amp;sortModel=%7B%22colId%22:%22Location%22,%22sort%22:%22asc%22%7D</a></p></li>
+<li><p>COVID data: <a href="https://covidtracking.com/race/about#download-the-data" class="uri">https://covidtracking.com/race/about#download-the-data</a></p></li>
+</ul>
+<p><br></p>
+</div>
+<div id="data-background" class="section level2">
+<h2>Data Background</h2>
+<ul>
+<li>The primary data source is the COVID Racial Data Tracker.They collect, cross-check, and publish COVID-19 data from 56 US states and territories in three main areas: testing, patient outcomes, and, via The COVID Racial Data Tracker, racial and ethnic demographic information. Data is being updated twice per week.I also combined the KFF <a href="data:Population" class="uri">data:Population</a> Distribution by Race/Ethnicity(2019) for the first and second questions.The KFF.org data is a non-profit foundation that does research, journalism, and communications programs.</li>
+</ul>
+<p><br></p>
+</div>
+<div id="method" class="section level2">
+<h2>Method</h2>
+<ul>
+<li>Given the data above, we consider removing the NA’s. We also excluded the “other” category in COVID data since there is no correspond variable in the population data. We sum up the case number of each race by the latest updated numbers, then look at the actual number of cases and deaths, prevalence, death rate and case fatality rate. The software using R.
+<ul>
+<li>Prevalence: the proportion of a population who have a specific characteristic in a given time period. Therefore, we use case number divided by the total number of population to get the prevalence for each known races.The time period would be from 04/12/2020 to 08/11/2020 for all the calculated rate.</li>
+<li>Death rate: a measure of the number of deaths (in general, or due to a specific cause) in a particular population, scaled to the size of that population, per unit of time. We use death number devided by the total number of population to get the death rate for each know race.</li>
+<li>Case fatality rate (CFR) : the proportion of deaths from a certain disease compared to the total number of people diagnosed with the disease for a particular period.So we use death number devided by case number for each known race.</li>
+</ul></li>
+</ul>
+<p><br></p>
+</div>
+<div id="the-overall-table" class="section level2">
+<h2>The overall table</h2>
+<p><div id="htmlwidget-16daa6c0eba8a9ad255b" style="width:700px;height:415.296px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-16daa6c0eba8a9ad255b">{"x":{"visdat":{"22842424d336":["function () ","plotlyVisDat"]},"cur_data":"22842424d336","attrs":{"22842424d336":{"columnwidth":[80,80,80,80,110,80,80],"header":{"values":["<b>races<\/b>","cases_number","deaths_number","total_population","case_fatality_rate(%)","prevalence(%)","death_rate"],"align":["left","center","center","center","center","center","center"],"line":{"width":1,"color":"black"},"fill":{"color":"rgb(140, 100, 230)"},"font":{"family":"Arial","size":12,"color":"white"}},"cells":{"values":[["AIAN","Asian","Black","LatinX","Multiracial","NHPI","White"],["84581","169969","1030625","1312430","45976","24943","3334324"],["2031","8125","44797","42774","557","332","118636"],["2125700","18007200","38872200","8856100","59102900","528200","191757100"],["2.40125","4.78028","4.34659","3.25915","1.2115","1.33103","3.55802"],["3.97897","0.94389","2.65132","14.8195","0.07779","4.72226","1.73883"],["0.95545","0.45121","1.15242","4.82989","0.00942","0.62855","0.61868"]],"align":["left","center","center","center","center","center","center"],"line":{"color":"black","width":1},"fill":{"color":["rgb(200, 193, 238,0.8)","rgba(200, 222, 249, 0.65)"]},"font":{"family":"Arial","size":12,"color":"black"}},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"table"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"hovermode":"closest","showlegend":false},"source":"A","config":{"showSendToCloud":false},"data":[{"columnwidth":[80,80,80,80,110,80,80],"header":{"values":["<b>races<\/b>","cases_number","deaths_number","total_population","case_fatality_rate(%)","prevalence(%)","death_rate"],"align":["left","center","center","center","center","center","center"],"line":{"width":1,"color":"black"},"fill":{"color":"rgb(140, 100, 230)"},"font":{"family":"Arial","size":12,"color":"white"}},"cells":{"values":[["AIAN","Asian","Black","LatinX","Multiracial","NHPI","White"],["84581","169969","1030625","1312430","45976","24943","3334324"],["2031","8125","44797","42774","557","332","118636"],["2125700","18007200","38872200","8856100","59102900","528200","191757100"],["2.40125","4.78028","4.34659","3.25915","1.2115","1.33103","3.55802"],["3.97897","0.94389","2.65132","14.8195","0.07779","4.72226","1.73883"],["0.95545","0.45121","1.15242","4.82989","0.00942","0.62855","0.61868"]],"align":["left","center","center","center","center","center","center"],"line":{"color":"black","width":1},"fill":{"color":["rgb(200, 193, 238,0.8)","rgba(200, 222, 249, 0.65)"]},"font":{"family":"Arial","size":12,"color":"black"}},"type":"table","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script> From the overall table we got the latest number of case and death for each race group in the table above.In addition, the AIAN is short for American Indian and Alaska Native, and the NHPI is short for Native Hawaiians and Pacific Islanders.</p>
+<p><br></p>
+</div>
+<div id="pie-chart-for-the-absolute-number-of-cases-and-deaths-for-known-races" class="section level2">
+<h2>Pie Chart for the absolute number of cases and deaths for known races</h2>
+<p><div id="htmlwidget-3e093c75f0b7a163c862" style="width:700px;height:415.296px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-3e093c75f0b7a163c862">{"x":{"visdat":{"2284526a2a72":["function () ","plotlyVisDat"],"22843808cca3":["function () ","data"],"228449b2fe12":["function () ","data"]},"cur_data":"228449b2fe12","attrs":{"22843808cca3":{"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"values":{},"labels":{},"type":"pie","name":"Case","domain":{"x":[0,0.4],"y":[0.4,1]},"inherit":true},"228449b2fe12":{"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"values":{},"labels":{},"type":"pie","name":"Death","domain":{"x":[0.6,1],"y":[0.4,1]},"inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"The percentage of reported COVID cases and deaths for each known race","showlegend":false,"xaxis":{"showgrid":false,"zeroline":false,"showticklabels":false},"yaxis":{"showgrid":false,"zeroline":false,"showticklabels":false},"hovermode":"closest"},"source":"A","config":{"showSendToCloud":false},"data":[{"values":[0.0140901452110731,0.0283147266097692,0.171689338127502,0.218634554797989,0.00765903117986662,0.00415519433442259,0.555457009739377],"labels":["AIAN","Asian","Black","LatinX","Multiracial","NHPI","White"],"type":"pie","name":"Case","domain":{"x":[0,0.4],"y":[0.4,1]},"marker":{"color":"rgba(31,119,180,1)","line":{"color":"rgba(255,255,255,1)"}},"frame":null},{"values":[0.00934859057684164,0.0373989652569366,0.206198331891076,0.196886564910795,0.00256384291053707,0.00152817925726806,0.546075525196546],"labels":["AIAN","Asian","Black","LatinX","Multiracial","NHPI","White"],"type":"pie","name":"Death","domain":{"x":[0.6,1],"y":[0.4,1]},"marker":{"color":"rgba(255,127,14,1)","line":{"color":"rgba(255,255,255,1)"}},"frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script> These pie charts were built based on absolute number. We can see that for both case and death number, White contributed more than a half to the total number of them. Differently, for the case number, the proportion of LatinX is slightly larger than the Black, which is opposite on the death count. For both case and death, the White, Black and LatinoX contributed most to the total number,which make sense since those three races are the top 3 component of U.S.population.</p>
+<p><br></p>
+</div>
+<div id="bar-plot-for-prevalence-and-death-rate" class="section level2 tabset">
+<h2>Bar Plot for prevalence and death rate</h2>
+<div id="prevalence" class="section level3">
+<h3>Prevalence</h3>
+<div id="htmlwidget-76e942650defa482adc8" style="width:700px;height:415.296px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-76e942650defa482adc8">{"x":{"visdat":{"22847bcefbe4":["function () ","plotlyVisDat"]},"cur_data":"22847bcefbe4","attrs":{"22847bcefbe4":{"y":{},"x":{},"marker":{"color":"rgb(140, 100, 230, 0.10)"},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar","name":{},"inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"The prevalence of reported COVID cases for each known race","xaxis":{"domain":[0,1],"automargin":true,"title":"Races","type":"category","categoryorder":"array","categoryarray":["AIAN","Asian","Black","LatinX","Multiracial","NHPI","White"]},"yaxis":{"domain":[0,1],"automargin":true,"title":"`prevalence(%)`"},"hovermode":"closest","showlegend":false},"source":"A","config":{"showSendToCloud":false},"data":[{"y":[3.97897,0.94389,2.65132,14.8195,0.07779,4.72226,1.73883],"x":["AIAN","Asian","Black","LatinX","Multiracial","NHPI","White"],"marker":{"color":"rgb(140, 100, 230, 0.10)","line":{"color":"rgba(31,119,180,1)"}},"type":"bar","name":"prevalence(%)","error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<p>From the bar plot above, we can tell that the latinX has the highest prevalence: 14.8%, which is more than twice of the second high race: the NHPI(4.7%). The AIAN race has the third high prevalence(3.9%). Those are the three races which have relative high prevalence comparing with other races.</p>
+<p><br></p>
+</div>
+<div id="death-rate" class="section level3">
+<h3>Death Rate</h3>
+<div id="htmlwidget-24e3c3748b379346c85e" style="width:700px;height:415.296px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-24e3c3748b379346c85e">{"x":{"visdat":{"228453cde030":["function () ","plotlyVisDat"]},"cur_data":"228453cde030","attrs":{"228453cde030":{"y":{},"x":{},"marker":{"color":"rgb(200, 193, 238)"},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar","name":{},"inherit":true}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"title":"The death rate of reported COVID deaths for each known race","xaxis":{"domain":[0,1],"automargin":true,"title":"Races","type":"category","categoryorder":"array","categoryarray":["AIAN","Asian","Black","LatinX","Multiracial","NHPI","White"]},"yaxis":{"domain":[0,1],"automargin":true,"title":"death_rate"},"hovermode":"closest","showlegend":false},"source":"A","config":{"showSendToCloud":false},"data":[{"y":[0.95545,0.45121,1.15242,4.82989,0.00942,0.62855,0.61868],"x":["AIAN","Asian","Black","LatinX","Multiracial","NHPI","White"],"marker":{"color":"rgb(200, 193, 238)","line":{"color":"rgba(31,119,180,1)"}},"type":"bar","name":"death_rate","error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<p>From the bar plot above, we can see that as same as the prevalence, the latinX also has the highest death rate(4.8per1000), it is triple of the second high death rate: the black(1.1per1000). The AIAN race has the third high death rate(0.9per1000). The NHPI and white has very similar death rate(0.6per1000).</p>
+<p><br></p>
+</div>
+</div>
+<div id="horizontal-bar-plot-for-cfr" class="section level2">
+<h2>Horizontal Bar Plot for CFR</h2>
+<div id="htmlwidget-8c3c4c97e3cc8ddb7417" style="width:700px;height:415.296px;" class="plotly html-widget"></div>
+<script type="application/json" data-for="htmlwidget-8c3c4c97e3cc8ddb7417">{"x":{"visdat":{"22847cc0ebff":["function () ","plotlyVisDat"]},"cur_data":"22847cc0ebff","attrs":{"22847cc0ebff":{"x":{},"y":{},"orientation":"h","marker":{"color":"rgba(200, 222, 249, 0.90)"},"alpha_stroke":1,"sizes":[10,100],"spans":[1,20],"type":"bar"}},"layout":{"margin":{"b":40,"l":60,"t":25,"r":10},"xaxis":{"domain":[0,1],"automargin":true,"title":"`case_fatality_rate(%)`"},"yaxis":{"domain":[0,1],"automargin":true,"title":"Races","type":"category","categoryorder":"array","categoryarray":["AIAN","Asian","Black","LatinX","Multiracial","NHPI","White"]},"hovermode":"closest","showlegend":false},"source":"A","config":{"showSendToCloud":false},"data":[{"x":[2.40125,4.78028,4.34659,3.25915,1.2115,1.33103,3.55802],"y":["AIAN","Asian","Black","LatinX","Multiracial","NHPI","White"],"orientation":"h","marker":{"color":"rgba(200, 222, 249, 0.90)","line":{"color":"rgba(31,119,180,1)"}},"type":"bar","error_y":{"color":"rgba(31,119,180,1)"},"error_x":{"color":"rgba(31,119,180,1)"},"xaxis":"x","yaxis":"y","frame":null}],"highlight":{"on":"plotly_click","persistent":false,"dynamic":false,"selectize":false,"opacityDim":0.2,"selected":{"opacity":1},"debounce":0},"shinyEvents":["plotly_hover","plotly_click","plotly_selected","plotly_relayout","plotly_brushed","plotly_brushing","plotly_clickannotation","plotly_doubleclick","plotly_deselect","plotly_afterplot","plotly_sunburstclick"],"base_url":"https://plot.ly"},"evals":[],"jsHooks":[]}</script>
+<p>Now let’s take a look at the case fatality rate.Interestingly, The top three high CFR are related with asian(4.7%), black(4.3%) and white(3.5%). This order is quite different with any previous ones. Take latiX for example, though it rank first in both prevalence and death rate, it only rank forth in the case fatality rate(3.2%). I think it could have something to do with people of different race’s immune system. It might be a good research question for health care scholars.</p>
+<p><br></p>
+</div>
+<div id="conclusion" class="section level2">
+<h2>Conclusion</h2>
+<p>Given the prevalence and the death rate results, there are four races that been affected most by COVID: LatinX, Black, AIAN and NHPI, which are minorities in the States that need more taken care of.</p>
+<p><br></p>
+<p>So far that’s it !</p>
+</div>
 </div>
 
 

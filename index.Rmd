@@ -17,7 +17,8 @@ library(dplyr)
 library(plotly)
 library(DT)
 library(knitr)
-
+library(psych)
+library(kableExtra)
 # Initialize code chunk options
 opts_chunk$set(
   warning = FALSE,
@@ -42,26 +43,186 @@ opts_chunk$set(
 }
 ```
 
+<br>
 
-## Clean!
-
-
-
-
-
-
-
-
-
-
-
-
-## {-}
+# Final Project presentation
 
 <br>
 
 
+## Overview
+- This is the PM566(Introduction to Health Data Science) final project. The analysis in this project is bases on the key question: Among population with known race category across the U.S, what races were being affected most by covid-19? It is obvious that the covid-19 is becoming a pandemic issue for the world, especially for they U.S. Also, the  States is one of the most racially and ethnically diverse nations in the world. Therefore, the key question should have something worth dig in. Let's take a look. 
 
 <br>
+
+
+## Data Souces
+- 2019 Races data: https://www.kff.org/other/state-indicator/distribution-by-raceethnicity/?dataView=1&currentTimeframe=0&selectedRows=%7B%22wrapups%22:%7B%22united-states%22:%7B%7D%7D%7D&sortModel=%7B%22colId%22:%22Location%22,%22sort%22:%22asc%22%7D
+
+- COVID data: https://covidtracking.com/race/about#download-the-data
+
 <br>
+
+## Data Background
+- The primary data source is the COVID Racial Data Tracker.They collect, cross-check, and publish COVID-19 data from 56 US states and territories in three main areas: testing, patient outcomes, and, via The COVID Racial Data Tracker, racial and ethnic demographic information. Data is being updated twice per week.I also combined the KFF data:Population Distribution by Race/Ethnicity(2019) for the first and second questions.The KFF.org data is a non-profit foundation that does research, journalism, and communications programs. 
+
+<br>
+
+## Method
+- Given the data above, we consider removing the NA's. We also excluded the "other" category in COVID data since there is no correspond variable in the population data. We sum up the case number of each race by the latest updated numbers, then look at the actual number of cases and deaths, prevalence, death rate and case fatality rate. The software using R.
+  - Prevalence: the proportion of a population who have a specific characteristic in a given time period. Therefore, we use case number divided by the total number of population to get the prevalence for each known races.The time period would be from 04/12/2020 to 08/11/2020 for all the calculated rate.
+  - Death rate: a measure of the number of deaths (in general, or due to a specific cause) in a particular population, scaled to the size of that population, per unit of time. We use death number devided by the total number of population to get the death rate for each know race. 
+  - Case fatality rate (CFR) : the proportion of deaths from a certain disease compared to the total number of people diagnosed with the disease for a particular period.So we use death number devided by case number for each known race.
+
+<br>
+
+```{r}
+#look at the data
+pop = data.table::fread("/Users/haoyueshan/Desktop/pm566/PM566-project/data/raw_data.csv")
+covid_race = data.table::fread("/Users/haoyueshan/Desktop/pm566/PM566-project/Data/Race-Data-updated.csv")
+#choosing the latest data 
+covid_race = covid_race[1:56,1:28]
+#change characteristic varibles into numeric varibles
+covid_race = covid_race %>% 
+  mutate(Cases_Total = as.numeric(Cases_Total), Cases_White = as.numeric(Cases_White), Cases_Ethnicity_Unknown = as.numeric(Cases_Ethnicity_Unknown))
+sub = covid_race[,4:28]
+#sum up the total values without NA's for every race and make an overall barplot
+temp = apply(sub,2,sum, na.rm = TRUE)
+temp = as.data.frame(temp)
+races = c("White","Black","LatinX","Asian","AIAN","NHPI","Multiracial")
+#make subgroup of cases and deaths(only look at the known cases and deaths)
+cases_number= temp[0:7,]
+cases = data.frame(races,cases_number)
+deaths_number = temp[14:20,]
+deaths = data.frame(races,deaths_number)
+#merge the death, case, and total population number 
+covid_number = merge(cases, deaths, by = "races")
+total_population = c(pop$`American Indian/Alaska Native`, pop$Asian,pop$Black, pop$`Multiple Races`, pop$Hispanic,pop$`Native Hawaiian/Other Pacific Islander`,pop$White)
+total = covid_number
+total["total_population"] = total_population
+# calculate the death and cases proportion for each race 
+total = total %>%
+  mutate("case_fatality_rate(%)" = deaths_number/cases_number*100, "prevalence(%)" = cases_number/total_population*100, "death_rate" = deaths_number/total_population*1000) %>%
+    mutate_if(is.numeric, round, digits = 5 )%>%
+  column_to_rownames(., var ="races") 
+```
+
+
+```{r}
+#make a table using plotly 
+fig1 <- plot_ly(
+  type = 'table',
+  columnwidth = c(80,80,80,80,110,80,80),
+  header = list(
+    values = c("<b>races</b>",names(total)),
+  align = c('left', rep('center', ncol(total))),
+  line = list(width = 1, color = 'black'),
+  fill = list(color = 'rgb(140, 100, 230)'),
+  font = list(family = "Arial", size = 12, color = "white")
+  ),
+  cells = list(
+    values = rbind(
+      rownames(total), 
+      t(as.matrix(unname(total)))
+    ),
+    align = c('left', rep('center', ncol(total))),
+    line = list(color = "black", width = 1),
+    fill = list(color = c('rgb(200, 193, 238,0.8)', 'rgba(200, 222, 249, 0.65)')),
+    font = list(family = "Arial", size = 12, color = c("black"))
+  ))
+```
+
+```{r}
+#pie chart
+Races = c("AIAN","Asian","Black","LatinX","Multiracial","NHPI","White")
+pct_case = total$cases_number/sum(total$cases_number)
+pct_cases = data.frame(Races,pct_case)
+pct_death = total$deaths_number/sum(total$deaths_number)
+pct_deaths = data.frame(Races,pct_death)
+#making a pie chart for race compnent using plotly 
+fig <-  plot_ly()
+fig <- fig %>% add_pie(data = pct_cases, labels = ~Races, values = ~pct_case,
+          name = "Case", domain = list(x = c(0, 0.4), y = c(0.4, 1)))
+fig <- fig %>% add_pie(data = pct_deaths, labels = ~Races, values = ~pct_death,
+          name = "Death", domain = list(x = c(0.6, 1), y = c(0.4, 1)))
+fig <- fig %>% layout(title = "The percentage of reported COVID cases and deaths for each known race", showlegend = F,
+         xaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE),
+         yaxis = list(showgrid = FALSE, zeroline = FALSE, showticklabels = FALSE))
+```
+
+
+```{r}
+Races = c("AIAN","Asian","Black","LatinX","Multiracial","NHPI","White")
+fig2 <- plot_ly(total, y = ~`prevalence(%)`, x = ~Races, marker = list(color = 'rgb(140, 100, 230, 0.10)'))
+fig2 <-fig2 %>%
+  add_bars(name = ~"prevalence(%)") %>%
+  layout(title = "The prevalence of reported COVID cases for each known race")
+```
+
+```{r}
+fig3 <- plot_ly(total, y = ~death_rate, x = ~Races, marker = list(color = 'rgb(200, 193, 238)'))
+fig3 <-fig3 %>%
+  add_bars(name = ~"death_rate") %>%
+  layout(title = "The death rate of reported COVID deaths for each known race")
+```
+
+```{r}
+fig4 <- plot_ly(total, x = ~`case_fatality_rate(%)`, y = ~Races, type = 'bar', orientation = 'h', marker = list(color = 'rgba(200, 222, 249, 0.90)'))
+```
+
+## The overall table 
+```{r,fig1}
+fig1
+```
+From the overall table we got the latest number of case and death for each race group in the table above.In addition, the AIAN is short for American Indian and Alaska Native, and the NHPI is short for Native Hawaiians and Pacific Islanders. 
+
+<br>
+
+## Pie Chart for the absolute number of cases and deaths for known races
+
+```{r,fig}
+fig
+```
+These pie charts were built based on absolute number. We can see that for both case and death number, White contributed more than a half to the total number of them. Differently, for the case number, the proportion of LatinX is slightly larger than the Black, which is opposite on the death count. For both case and death, the White, Black and LatinoX contributed most to the total number,which make sense since those three races are the top 3 component of U.S.population. 
+
+<br>
+
+## Bar Plot for prevalence and death rate {.tabset}
+
+### Prevalence
+```{r,fig2}
+fig2
+```
+
+From the bar plot above, we can tell that the latinX has the highest prevalence: 14.8%, which is more than twice of the second high race: the NHPI(4.7%). The AIAN race has the third high prevalence(3.9%). Those are the three races which have relative high prevalence comparing with other races.
+
+<br>
+
+### Death Rate
+```{r,fig3}
+fig3
+```
+
+From the bar plot above, we can see that as same as the prevalence, the latinX also has the highest death rate(4.8per1000),  it is triple of the second high death rate: the black(1.1per1000). The AIAN race has the third high death rate(0.9per1000). The NHPI and white has very similar death rate(0.6per1000).
+
+<br>
+
+## Horizontal Bar Plot for CFR 
+
+```{r,fig4}
+fig4
+```
+
+Now let's take a look at the case fatality rate.Interestingly, The top three high CFR are related with asian(4.7%), black(4.3%) and white(3.5%). This order is quite different with any previous ones. Take latiX for example, though it rank first in both prevalence and death rate, it only rank forth in the case fatality rate(3.2%). I think it could have something to do with people of different race's immune system. It might be a good research question for health care scholars.
+
+<br>
+
+## Conclusion
+Given the prevalence and the death rate results, there are four races that been affected most by COVID: LatinX, Black, AIAN and NHPI, which are minorities in the States that need more taken care of. 
+
+
+
+<br>
+
+So far that's it ! 
 
