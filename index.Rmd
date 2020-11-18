@@ -50,7 +50,7 @@ opts_chunk$set(
 
 
 ## Overview
-- This is the PM566(Introduction to Health Data Science) final project. The analysis in this project is bases on the key question: Among population with known race category across the U.S, what races were being affected most by covid-19? It is obvious that the covid-19 is becoming a pandemic issue for the world, especially for they U.S. Also, the  States is one of the most racially and ethnically diverse nations in the world. Therefore, the key question should have something worth dig in. Let's take a look. 
+- This is the PM566(Introduction to Health Data Science) final project. The analysis in this project is bases on the key question: Among population with known race category across the U.S, what races were being affected most by covid-19? It is obvious that the covid-19 is becoming a pandemic issue for the world, especially for the U.S. Also, the  States is one of the most racially and ethnically diverse nations in the world. Therefore, the key question should have something worth dig in. Let's take a look. 
 
 <br>
 
@@ -182,7 +182,7 @@ From the overall table we got the latest number of case and death for each race 
 ```{r,fig}
 fig
 ```
-These pie charts were built based on absolute number. We can see that for both case and death number, White contributed more than a half to the total number of them. Differently, for the case number, the proportion of LatinX is slightly larger than the Black, which is opposite on the death count. For both case and death, the White, Black and LatinoX contributed most to the total number,which make sense since those three races are the top 3 component of U.S.population. 
+These pie charts were built based on absolute number. We can see that for both case and death number, White contributed more than a half to the total number of them. Differently, for the case number, the proportion of LatinX is slightly larger than the Black, which is opposite on the death count. For both case and death, the White, Black and LatinX contributed most to the total number,which make sense since those three races are the top 3 component of U.S.population. 
 
 <br>
 
@@ -193,7 +193,7 @@ These pie charts were built based on absolute number. We can see that for both c
 fig2
 ```
 
-From the bar plot above, we can tell that the latinX has the highest prevalence: 14.8%, which is more than twice of the second high race: the NHPI(4.7%). The AIAN race has the third high prevalence(3.9%). Those are the three races which have relative high prevalence comparing with other races.
+From the bar plot above, we can tell that the LatinX has the highest prevalence: 14.8%, which is more than twice of the second high race: the NHPI(4.7%). The AIAN race has the third high prevalence(3.9%). Those are the three races which have relative high prevalence comparing with other races.
 
 <br>
 
@@ -202,7 +202,7 @@ From the bar plot above, we can tell that the latinX has the highest prevalence:
 fig3
 ```
 
-From the bar plot above, we can see that as same as the prevalence, the latinX also has the highest death rate(4.8per1000),  it is triple of the second high death rate: the black(1.1per1000). The AIAN race has the third high death rate(0.9per1000). The NHPI and white has very similar death rate(0.6per1000).
+From the bar plot above, we can see that as same as the prevalence, the LatinX also has the highest death rate(4.8per1000),  it is triple of the second high death rate: the black(1.1per1000). The AIAN race has the third high death rate(0.9per1000). The NHPI and white has very similar death rate(0.6per1000).
 
 <br>
 
@@ -212,7 +212,7 @@ From the bar plot above, we can see that as same as the prevalence, the latinX a
 fig4
 ```
 
-Now let's take a look at the case fatality rate.Interestingly, The top three high CFR are related with asian(4.7%), black(4.3%) and white(3.5%). This order is quite different with any previous ones. Take latiX for example, though it rank first in both prevalence and death rate, it only rank forth in the case fatality rate(3.2%). I think it could have something to do with people of different race's immune system. It might be a good research question for health care scholars.
+Now let's take a look at the case fatality rate.Interestingly, The top three high CFR are related with Asian(4.7%), Black(4.3%) and White(3.5%). This order is quite different with any previous ones. Take LatinX for example, though it rank first in both prevalence and death rate, it only rank forth in the case fatality rate(3.2%). I think it could have something to do with people of different race's immune system. It might be a good research question for health care scholars.
 
 <br>
 
