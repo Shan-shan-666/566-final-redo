@@ -10,8 +10,8 @@ navbar:
     - text: "Assignment 5"
       href: assignment5.html
   right:
-      - text: "Full PDF Report"
-        href: test.pdf
+    - text: "Full PDF Report"
+      href: test.pdf
 output:
   html_document:
     theme: cosmo
