@@ -101,9 +101,10 @@ total = covid_number
 total["total_population"] = total_population
 # calculate the death and cases proportion for each race 
 total = total %>%
-  mutate("case_fatality_rate(%)" = deaths_number/cases_number*100, "prevalence(%)" = cases_number/total_population*100, "death_rate" = deaths_number/total_population*1000) %>%
+  mutate("case_fatality_rate(%)" = deaths_number/cases_number*100, "prevalence(%)" = cases_number/total_population*100, "death_rate(%)" = deaths_number/total_population*100) %>%
     mutate_if(is.numeric, round, digits = 5 )%>%
   column_to_rownames(., var ="races") 
+kable(total)
 ```
 
 
@@ -159,7 +160,7 @@ fig2 <-fig2 %>%
 ```
 
 ```{r}
-fig3 <- plot_ly(total, y = ~death_rate, x = ~Races, marker = list(color = 'rgb(200, 193, 238)'))
+fig3 <- plot_ly(total, y = ~`death_rate(%)`, x = ~Races, marker = list(color = 'rgb(200, 193, 238)'))
 fig3 <-fig3 %>%
   add_bars(name = ~"death_rate") %>%
   layout(title = "The death rate of reported COVID deaths for each known race")
@@ -215,6 +216,17 @@ fig4
 Now let's take a look at the case fatality rate.Interestingly, The top three high CFR are related with Asian(4.7%), Black(4.3%) and White(3.5%). This order is quite different with any previous ones. Take LatinX for example, though it rank first in both prevalence and death rate, it only rank forth in the case fatality rate(3.2%). I think it could have something to do with people of different race's immune system. It might be a good research question for health care scholars.
 
 <br>
+
+```{r}
+#using cfr as y-axis label then make scatter plot of three rates 
+sub2 = total[,4:6]
+sub2$overall_rate = c(2.40125,4.78028,4.34659,3.25915,1.21150,1.33103,3.55802)
+fig5 = plot_ly(data =sub2, x = ~Races, y = ~`overall_rate`)
+fig5 <- fig5 %>% add_markers(data =sub2, x = ~Races, y = ~`overall_rate`,type = 'scatter',text = 'CFR',size =~`case_fatality_rate(%)`)
+fig5 <- fig5 %>% add_markers(data =sub2, x = ~Races, y = ~`death_rate(%)`,type = 'scatter',color = 'red',text = 'death rate', size = ~`death_rate(%)`)
+fig5 <- fig5 %>% add_markers(data =sub2, x = ~Races, y = ~`prevalence(%)`,type = 'scatter',color = 'green',text = 'prevalence', size =~`prevalence(%)`)
+fig5
+```
 
 ## Conclusion
 Given the prevalence and the death rate results, there are four races that been affected most by COVID: LatinX, Black, AIAN and NHPI, which are minorities in the States that need more taken care of. 
